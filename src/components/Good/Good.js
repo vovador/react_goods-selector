@@ -6,24 +6,39 @@ export class Good extends React.Component {
     isSelected: false,
   };
 
-  clickHandler = () => {
+  clickHandlerAdd = () => {
     this.setState(prevState => ({ isSelected: !prevState.isSelected }));
     this.props.setGood(this.props.word);
   };
 
+  clickHandlerRemove = () => {
+    const value = this.props.selectedGood.filter(
+      good => good !== this.props.word,
+    );
+
+    this.props.removeSelection(value);
+  }
+
   render() {
     return (
       <>
-        <li className={this.props.word === this.props.selectedGood
+        <li className={this.props.selectedGood.includes(this.props.word)
           ? 'selected' : null}
         >
           {this.props.word}
         </li>
         <button
           type="button"
-          onClick={this.clickHandler}
+          onClick={this.clickHandlerAdd}
         >
-          Select
+          Add
+        </button>
+        {' '}
+        <button
+          type="button"
+          onClick={this.clickHandlerRemove}
+        >
+          Remove
         </button>
       </>
     );
@@ -33,5 +48,6 @@ export class Good extends React.Component {
 Good.propTypes = {
   setGood: PropTypes.func.isRequired,
   word: PropTypes.string.isRequired,
-  selectedGood: PropTypes.string.isRequired,
+  selectedGood: PropTypes.arrayOf(PropTypes.string).isRequired,
+  removeSelection: PropTypes.func.isRequired,
 };
