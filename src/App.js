@@ -4,14 +4,17 @@ import { GoodList } from './components/GoodList/GoodList';
 
 class App extends React.Component {
   state = {
-    selectedGood: '',
+    selectedGood: [],
   }
 
   setGood = (value) => {
-    this.setState({
-      selectedGood: value,
-    });
-  }
+    this.setState(prevState => (
+      { selectedGood: [...prevState.selectedGood, value] }));
+  };
+
+  removeSelection = (value) => {
+    this.setState(prevState => ({ selectedGood: value }));
+  };
 
   render() {
     return (
@@ -19,17 +22,18 @@ class App extends React.Component {
         <h1>
           Selected good:
           {' '}
-          {this.state.selectedGood}
+          {this.state.selectedGood.join(',')}
         </h1>
         <button
           type="button"
-          onClick={() => this.setState({ selectedGood: '' })}
+          onClick={() => this.setState({ selectedGood: [] })}
         >
           X
         </button>
         <GoodList
           setGood={this.setGood}
           selectedGood={this.state.selectedGood}
+          removeSelection={this.removeSelection}
         />
       </div>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 import { Good } from '../Good/Good';
 
 const goodsFromServer = [
@@ -33,6 +33,7 @@ export class GoodList extends React.Component {
               word={good}
               setGood={this.props.setGood}
               selectedGood={this.props.selectedGood}
+              removeSelection={this.props.removeSelection}
             />
           </div>
         ))}
@@ -43,5 +44,6 @@ export class GoodList extends React.Component {
 
 GoodList.propTypes = {
   setGood: PropTypes.func.isRequired,
-  selectedGood: PropTypes.string.isRequired,
+  selectedGood: PropTypes.arrayOf(string).isRequired,
+  removeSelection: PropTypes.func.isRequired,
 };
